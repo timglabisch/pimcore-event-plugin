@@ -1,0 +1,22 @@
+parameters:
+    hello_world.class: Symfonydic_Testclass_Foo
+services:
+    hello:
+        class:  %hello_world.class%
+    pimcore_logger:
+        class: Logger_Shared
+    pimcore_backup:
+        class:  Pimcore_Backup
+    pimcore_env:
+        class:  Pimcore_Env
+    pimcore_io:
+        class: Pimcore_Io
+    pimcore_resource:
+        class: Pimcore_Resource_Shared
+    pimcore_backup:
+        class: Pimcore_Backup
+        calls:
+            - [ setIo, [ @pimcore_io ] ]
+            - [ setPimcoreEnv, [ @pimcore_env ] ]
+            - [ setResource, [ @pimcore_resource ] ]
+            - [ setLogger, [ @pimcore_logger ] ]
