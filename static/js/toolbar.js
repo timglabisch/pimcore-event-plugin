@@ -3,9 +3,11 @@ pimcore.registerNS("pimcore.plugin.Events");
 pimcore.plugin.Events = Class.create(pimcore.plugin.admin, {
 
     PimcoreKernelReady : function() {
-        pimcore.globalmanager.get('event').on(pimcore.event.pimcoreLayoutToolbarRender, this.onLayoutToolbarRender.bind(this));
-        pimcore.globalmanager.get('event').on(pimcore.event.pimcoreDocumentTreeContextMenuRender, this.onDocumentTreeContextMenuRender.bind(this));
-        pimcore.globalmanager.get('event').on(pimcore.event.pimcoreDocumentTreeContextMenuRender, this.pimcoreDocumentTreeContextMenuRenderUnderPage.bind(this));
+        pimcore.on(pimcore.event.pimcore.layout.toolbar.render, this.onLayoutToolbarRender.bind(this));
+        pimcore.on(pimcore.event.pimcore.document.tree.node.contextMenu.render, this.onDocumentTreeContextMenuRender.bind(this));
+        pimcore.on(pimcore.event.pimcore.document.tree.node.contextMenu.render, this.pimcoreDocumentTreeContextMenuRenderUnderPage.bind(this));
+        pimcore.on(pimcore.event.pimcore.object.tree.node.contextMenu.render, this.pimcoreObjectTreeContextMenu.bind(this));
+        pimcore.on(pimcore.event.pimcore.asset.tree.node.contextMenu.render, this.pimcoreAssetTreeContextMenu.bind(this));
     },
 
     onLayoutToolbarRender: function (toolbar){
@@ -31,6 +33,22 @@ pimcore.plugin.Events = Class.create(pimcore.plugin.admin, {
     pimcoreDocumentTreeContextMenuRenderUnderPage : function(menu, documentId) {
         menu.items.get('add_page').menu.add({
             text: "yea " +  documentId
+        });
+    },
+
+    pimcoreObjectTreeContextMenu : function(menu, objectId) {
+        menu.add({
+            text: "yea " +  objectId,
+            iconCls: "pimcore_icon_email_add",
+            handler: function() { alert('click!'); }
+        });
+    },
+
+    pimcoreAssetTreeContextMenu : function(menu, objectId) {
+        menu.add({
+            text: "yea " +  objectId,
+            iconCls: "pimcore_icon_email_add",
+            handler: function() { alert('click!'); }
         });
     }
 });
